@@ -1,0 +1,127 @@
+# Claude Code Rules: Frontend (Next.js)
+
+**Context**: Frontend application specific guidance
+
+## Framework & Stack
+
+- **Framework**: Next.js 14+ with App Router
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS (or CSS Modules)
+- **State Management**: React Context / Zustand (avoid Redux unless necessary)
+- **Data Fetching**: Server Components (default), Client Components when needed
+
+## Project Structure
+
+```
+apps/frontend/
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   ├── components/       # Reusable React components
+│   ├── lib/              # Utilities, helpers, API clients
+│   └── types/            # TypeScript type definitions
+├── public/               # Static assets
+├── tests/                # Jest + React Testing Library
+└── package.json
+```
+
+## Code Style
+
+### Components
+
+- Functional components with hooks (no class components)
+- Use Server Components by default
+- Add `"use client"` directive only when needed (interactivity, browser APIs)
+- Props: Use TypeScript interfaces, export for reuse
+
+```typescript
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary';
+}
+
+export function Button({ label, onClick, variant = 'primary' }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>;
+}
+```
+
+### File Naming
+
+- Components: `PascalCase.tsx` (e.g., `UserProfile.tsx`)
+- Utilities: `camelCase.ts` (e.g., `formatDate.ts`)
+- Pages: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`
+
+## API Integration
+
+- **API Base URL**: From environment variable `NEXT_PUBLIC_API_URL`
+- **Client**: Use `fetch` or `axios`
+- **Error Handling**: Always handle errors, show user-friendly messages
+- **Loading States**: Use Suspense boundaries and loading.tsx
+
+```typescript
+// lib/api-client.ts
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export async function fetchTodos() {
+  const response = await fetch(`${API_URL}/todos`);
+  if (!response.ok) throw new Error('Failed to fetch todos');
+  return response.json();
+}
+```
+
+## Testing
+
+- **Unit Tests**: Component logic, utilities
+- **Integration Tests**: Component + API interaction
+- **E2E Tests**: Critical user flows (optional)
+
+```bash
+npm test              # Run all tests
+npm test -- --watch   # Watch mode
+npm test -- --coverage # Coverage report
+```
+
+## Environment Variables
+
+```
+# .env.local (never commit)
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_APP_NAME=My App
+```
+
+- Prefix with `NEXT_PUBLIC_` for browser access
+- Keep secrets server-side only (no `NEXT_PUBLIC_`)
+
+## Performance
+
+- Use `next/image` for images
+- Use `next/link` for navigation
+- Lazy load components with `dynamic()`
+- Minimize client-side JavaScript
+
+## Styling
+
+- Tailwind: Use utility classes
+- Custom styles: CSS Modules for component-specific styles
+- Global styles: `app/globals.css`
+- Dark mode: Use Tailwind dark: variant
+
+## References
+
+- API specs: `../../specs/api/`
+- UI specs: `../../specs/ui/`
+- Database models: Map from `../../specs/database/` via API
+
+## Common Commands
+
+```bash
+npm run dev          # Development server (localhost:3000)
+npm run build        # Production build
+npm run start        # Production server
+npm run lint         # ESLint
+npm run type-check   # TypeScript check
+```
+
+---
+
+**Note**: This CLAUDE.md overrides root-level rules for frontend-specific guidance.

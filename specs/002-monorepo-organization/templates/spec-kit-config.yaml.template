@@ -1,0 +1,32 @@
+# Spec-Kit Plus Configuration for Monorepo
+# Copy this to .spec-kit/config.yaml in your monorepo root
+
+# Specification directories
+specs_directory: specs/features
+plan_directory: specs/features
+tasks_directory: specs/features
+
+# Additional spec locations
+api_specs: specs/api
+db_specs: specs/database
+ui_specs: specs/ui
+
+# Template customization (optional)
+templates_directory: .spec-kit/templates
+scripts_directory: .spec-kit/scripts
+
+# Feature numbering
+feature_number_format: "###"  # e.g., 001, 002, 003
+
+# Workflow settings
+require_spec_before_plan: true
+require_plan_before_tasks: true
+auto_create_branches: false
+
+# Documentation generation
+generate_readme: true
+generate_quickstart: true
+
+# Version control integration
+git_enabled: true
+branch_prefix: "feature/"

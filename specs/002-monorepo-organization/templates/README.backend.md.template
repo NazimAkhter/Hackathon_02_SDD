@@ -1,0 +1,17 @@
+# Backend Application
+
+FastAPI application.
+
+## Setup
+
+python -m venv venv
+source venv/bin/activate
+pip install -e .
+cp .env.example .env
+uvicorn src.main:app --reload
+
+## Commands
+
+uvicorn src.main:app --reload - Development
+pytest - Run tests
+alembic upgrade head - Migrations

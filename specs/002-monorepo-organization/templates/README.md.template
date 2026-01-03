@@ -1,0 +1,22 @@
+# {monorepo-name}
+
+Full-stack application with Next.js frontend and FastAPI backend.
+
+## Structure
+
+- apps/frontend/ - Next.js application
+- apps/backend/ - FastAPI application
+- specs/ - Centralized specifications
+
+## Quick Start
+
+See individual app READMEs for setup instructions.
+
+Frontend: apps/frontend/README.md
+Backend: apps/backend/README.md
+
+## Spec-Driven Development
+
+This project follows SDD workflow: spec → plan → tasks → implement
+
+See .spec-kit/ for configuration.

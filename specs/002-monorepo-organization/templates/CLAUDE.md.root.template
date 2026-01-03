@@ -1,0 +1,88 @@
+# Claude Code Rules: Monorepo Root
+
+**Context**: Root-level AI assistance for {monorepo-name}
+
+## Repository Structure
+
+This is a monorepo containing multiple applications with centralized specifications:
+
+- **Frontend**: Next.js application in `apps/frontend/`
+- **Backend**: FastAPI application in `apps/backend/`
+- **Specifications**: Centralized in `specs/`
+
+## Workflow: Spec-Driven Development
+
+All development follows the Spec-Kit Plus workflow:
+
+1. **Specification**: Create feature spec in `specs/features/###-feature-name/spec.md`
+2. **Planning**: Generate architectural plan in `plan.md`
+3. **Tasks**: Break down into tasks in `tasks.md`
+4. **Implementation**: Execute tasks incrementally
+
+## Navigation
+
+- **Working on frontend?** → `cd apps/frontend/` (follows `apps/frontend/CLAUDE.md`)
+- **Working on backend?** → `cd apps/backend/` (follows `apps/backend/CLAUDE.md`)
+- **Writing specifications?** → Reference `specs/` directory
+- **API contracts?** → See `specs/api/`
+- **Database schemas?** → See `specs/database/`
+- **UI specifications?** → See `specs/ui/`
+
+## Git Workflow
+
+**Branch Naming**:
+- Features: `feature/###-feature-name`
+- Bugfixes: `fix/###-bug-description`
+- Documentation: `docs/topic`
+
+**Commit Messages**:
+- Format: `type: brief description`
+- Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+- Example: `feat: add user authentication endpoint`
+- Always reference task IDs from `tasks.md` when implementing
+
+## Cross-App Coordination
+
+- **API Contracts**: Defined in `specs/api/` - both apps must stay in sync
+- **Database Schemas**: Defined in `specs/database/` - backend implements, frontend consumes via API
+- **UI Specifications**: Defined in `specs/ui/` - frontend implements
+- **Shared Types**: Consider defining in specs and generating for both apps
+
+## Code Quality
+
+- Follow framework-specific best practices (see app-level CLAUDE.md)
+- Maintain test coverage appropriate for each app
+- Document architectural decisions in ADRs (if using)
+- Keep dependencies up to date
+
+## Environment Variables
+
+- **Never commit** `.env` files
+- Maintain `.env.example` in each app
+- Document all required variables
+- Use different values for dev/staging/prod
+
+## Testing Strategy
+
+- **Frontend**: Jest + React Testing Library
+- **Backend**: pytest + async support
+- **Integration**: Test API contracts against backend
+- **E2E**: Optional Playwright/Cypress
+
+## Documentation
+
+- Feature documentation: In feature spec (`specs/features/`)
+- API documentation: OpenAPI/Swagger in `specs/api/`
+- Architecture decisions: In `plan.md` files
+- Onboarding: See root `README.md`
+
+## When in Doubt
+
+1. Check if specification exists in `specs/`
+2. Review app-specific CLAUDE.md for framework guidance
+3. Follow existing patterns in the codebase
+4. Ask user for clarification if requirements are ambiguous
+
+---
+
+**Hierarchy**: Root CLAUDE.md → App-specific CLAUDE.md (app rules override root rules)
