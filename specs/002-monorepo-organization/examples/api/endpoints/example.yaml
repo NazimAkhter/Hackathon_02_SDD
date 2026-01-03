@@ -1,0 +1,20 @@
+# Example API Endpoint
+
+openapi: 3.0.0
+info:
+  title: Example API
+  version: 1.0.0
+
+paths:
+  /api/v1/examples:
+    get:
+      summary: List examples
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object

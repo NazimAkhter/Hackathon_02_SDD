@@ -1,0 +1,15 @@
+# Frontend Application
+
+Next.js application.
+
+## Setup
+
+npm install
+cp .env.example .env.local
+npm run dev
+
+## Commands
+
+npm run dev - Development
+npm run build - Production build
+npm run test - Run tests

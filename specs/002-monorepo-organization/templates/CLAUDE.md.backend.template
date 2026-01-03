@@ -1,0 +1,176 @@
+# Claude Code Rules: Backend (FastAPI)
+
+**Context**: Backend application specific guidance
+
+## Framework & Stack
+
+- **Framework**: FastAPI 0.104+
+- **Language**: Python 3.11+
+- **ORM**: SQLModel or SQLAlchemy
+- **Database**: PostgreSQL (Neon DB recommended)
+- **Async**: Use async/await for all endpoints
+
+## Project Structure
+
+```
+apps/backend/
+├── src/
+│   ├── models/       # Pydantic models, DB models
+│   ├── routes/       # API endpoint handlers
+│   ├── services/     # Business logic layer
+│   ├── middleware/   # Authentication, logging, etc.
+│   ├── config.py     # Configuration management
+│   └── main.py       # FastAPI app initialization
+├── tests/            # pytest tests
+├── pyproject.toml    # Dependencies (Poetry/pip)
+└── .env.example      # Environment variable template
+```
+
+## Code Style
+
+### Endpoints
+
+- Use async def for all endpoints
+- Type hints for all parameters and return values
+- Pydantic models for request/response validation
+- HTTP status codes: Use FastAPI's status module
+
+```python
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel
+
+router = APIRouter()
+
+class TodoCreate(BaseModel):
+    title: str
+    description: str | None = None
+
+@router.post("/todos", status_code=status.HTTP_201_CREATED)
+async def create_todo(todo: TodoCreate):
+    # Implementation
+    return {"id": 1, **todo.dict()}
+```
+
+### File Naming
+
+- Modules: `snake_case.py` (e.g., `user_service.py`)
+- Classes: `PascalCase` (e.g., `UserService`)
+- Functions: `snake_case` (e.g., `get_user_by_id`)
+
+## Database
+
+- **Models**: Use SQLModel for type safety
+- **Migrations**: Alembic for schema changes
+- **Connection**: Async SQLAlchemy engine
+- **Schema**: Reference `../../specs/database/`
+
+```python
+from sqlmodel import Field, SQLModel
+
+class Todo(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    title: str
+    description: str | None = None
+    completed: bool = False
+```
+
+## API Design
+
+- **REST conventions**: Use proper HTTP methods
+- **Versioning**: `/api/v1/` prefix
+- **CORS**: Configure for frontend origin
+- **Error handling**: Consistent error responses
+
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+## Testing
+
+- **Unit tests**: Services and utility functions
+- **Integration tests**: Database operations
+- **API tests**: Endpoint responses using TestClient
+
+```bash
+pytest                    # Run all tests
+pytest --cov              # With coverage
+pytest -v                 # Verbose
+pytest tests/test_api.py  # Specific file
+```
+
+## Environment Variables
+
+```
+# .env (never commit)
+DATABASE_URL=postgresql://user:pass@localhost/dbname
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+CORS_ORIGINS=http://localhost:3000
+```
+
+## Security
+
+- **Authentication**: JWT tokens or session-based
+- **Passwords**: Use bcrypt for hashing
+- **Secrets**: Never hardcode, use environment variables
+- **Input validation**: Pydantic models validate all input
+- **SQL injection**: Use ORM parameterized queries
+
+## Performance
+
+- **Database**: Use connection pooling
+- **Caching**: Redis for frequently accessed data (optional)
+- **Background tasks**: Use FastAPI BackgroundTasks
+- **Async**: Await all I/O operations
+
+## Logging
+
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+logger.info("Application started")
+logger.error("Error occurred", exc_info=True)
+```
+
+## References
+
+- API contracts: `../../specs/api/` - must match endpoints
+- Database schema: `../../specs/database/` - implement models
+- Feature specs: `../../specs/features/` - understand requirements
+
+## Common Commands
+
+```bash
+# Development
+uvicorn src.main:app --reload  # Dev server (localhost:8000)
+
+# Testing
+pytest                         # Run tests
+pytest --cov=src               # With coverage
+
+# Database
+alembic revision --autogenerate -m "description"  # Create migration
+alembic upgrade head                               # Apply migrations
+
+# Code quality
+ruff check src/               # Linting
+mypy src/                     # Type checking
+black src/                    # Format code
+```
+
+## Dependencies
+
+- Add to `pyproject.toml` (Poetry) or `requirements.txt`
+- Pin versions for production
+- Keep dependencies minimal
+
+---
+
+**Note**: This CLAUDE.md overrides root-level rules for backend-specific guidance.
