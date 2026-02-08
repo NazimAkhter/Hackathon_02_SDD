@@ -15,9 +15,14 @@ from src.todo_app.cli import (
     get_user_choice,
     add_todo_flow,
     view_todos_flow,
+    view_upcoming_todos,
+    view_overdue_todos,
     update_todo_flow,
     delete_todo_flow,
-    mark_complete_flow
+    mark_complete_flow,
+    search_todos_flow,
+    filter_todos_flow,
+    sort_todos_flow
 )
 
 
@@ -50,12 +55,22 @@ def main():
             elif choice == 2:
                 view_todos_flow(service)
             elif choice == 3:
-                update_todo_flow(service)
+                view_upcoming_todos(service)
             elif choice == 4:
-                delete_todo_flow(service)
+                view_overdue_todos(service)
             elif choice == 5:
-                mark_complete_flow(service)
+                update_todo_flow(service)
             elif choice == 6:
+                delete_todo_flow(service)
+            elif choice == 7:
+                mark_complete_flow(service)
+            elif choice == 8:
+                search_todos_flow(service)
+            elif choice == 9:
+                filter_todos_flow(service)
+            elif choice == 10:
+                sort_todos_flow(service)
+            elif choice == 11:
                 print_goodbye()
                 break
 
