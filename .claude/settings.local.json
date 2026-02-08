@@ -3,7 +3,13 @@
     "allow": [
       "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
       "Bash(git checkout:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(bash:*)",
+      "Bash(git config:*)",
+      "Bash(python3:*)",
+      "Bash(.specify/scripts/bash/create-phr.sh:*)",
+      "Bash(git --version)",
+      "Bash(git add:*)"
     ]
   }
 }
