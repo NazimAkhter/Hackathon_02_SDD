@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat\\(monorepo\\): complete monorepo organization documentation and templates\n\nImplement comprehensive monorepo structure documentation for Next.js + FastAPI projects:\n- Add spec organization guide with cross-referencing patterns\n- Create Claude Code workflow documentation with hierarchical CLAUDE.md strategy\n- Provide environment variable templates for frontend and backend\n- Include example specifications across all domains \\(features, API, database, UI\\)\n- Add project initialization scripts and validation checklists\n- Create .gitignore with comprehensive patterns\n\nAll 24 tasks completed across 6 phases. Documentation and templates ready for production use.\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git checkout:*)",
+      "Bash(git stash:*)"
     ]
   }
 }
